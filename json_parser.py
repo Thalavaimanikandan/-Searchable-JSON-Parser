@@ -17,7 +17,7 @@ class JSONSearchable:
         current_data=self.data
         for value in parts:
             if not value:
-                return "null"
+                return None
             if "[" in value:
                 key,*rest=re.split(r'(\[.*?\])',value) 
                 if key:
@@ -25,7 +25,7 @@ class JSONSearchable:
                     if isinstance:
                         return current_data,list
                     else:
-                        return "null"
+                        return None
                 for r in rest:
                     if not r:
                         continue
@@ -47,7 +47,7 @@ class JSONSearchable:
                                     elif value=="false":
                                         return False
                                     elif value=="null":
-                                        return "null"
+                                        return None
                                     else:
                                         return value
                                     if eval(f"item[obj] {op} right"):
@@ -59,7 +59,7 @@ class JSONSearchable:
                         if isinstance:
                             return current_data,dict
                         else:
-                            return "null"
+                            return None         
             else:
                 current_data=current_data.get(value)  
                 if isinstance(current_data,dict):
@@ -67,10 +67,10 @@ class JSONSearchable:
                 elif isinstance(current_data,list):
                     pass
                 else:
-                    return "null"
+                    return None
                 
                 
-        return current_data                       
+        return current_data                      
 
 if __name__=="__main__":
     json_data = """
@@ -87,7 +87,6 @@ if __name__=="__main__":
         }
     }
     """   
-
     searchable_json = JSONSearchable.parse(json_data)
 
     for Queries in [
@@ -99,8 +98,9 @@ if __name__=="__main__":
     ]:
      my_variable=searchable_json
      if my_variable is not None:
-            result = my_variable.search(Queries)
+            result = re.search(Queries)
             print(Queries)
             print(result)
+            
     
     
