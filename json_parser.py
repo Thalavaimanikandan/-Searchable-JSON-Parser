@@ -4,24 +4,28 @@ class JSONSearchable:
         self.data=data
     
     def parse(json_string):
-        for old,new in [("true","True"),("false","False"),("null","None")]:
-         json_string=json_string.replace(old,new)
-         return JSONSearchable (eval(json_string,{ "builtins":None },{}))
+        try:
+          for old,new in [("true","True"),("false","False"),("null","None")]:
+            json_string=json_string.replace(old,new)
+          return JSONSearchable (eval(json_string,{ "__builtins__":None },{}))
+        except Exception as e:
+            ("indentation error:",e)
+            return None
        
     def search(self,path):
         parts=re.split(r'\.(?![^\[]*\])',path)
         current_data=self.data
         for value in parts:
             if not value:
-                return None
+                return "null"
             if "[" in value:
                 key,*rest=re.split(r'(\[.*?\])',value) 
                 if key:
                     current_data=current_data.get(key)
                     if isinstance:
-                        return current_data,dict
+                        return current_data,list
                     else:
-                        return None
+                        return "null"
                 for r in rest:
                     if not r:
                         continue
@@ -43,7 +47,7 @@ class JSONSearchable:
                                     elif value=="false":
                                         return False
                                     elif value=="null":
-                                        return None
+                                        return "null"
                                     else:
                                         return value
                                     if eval(f"item[obj] {op} right"):
@@ -53,15 +57,19 @@ class JSONSearchable:
                         idx=int(r[1:-1])
                         current_data=current_data[idx]
                         if isinstance:
-                            return current_data,list
+                            return current_data,dict
                         else:
-                            return None
+                            return "null"
             else:
                 current_data=current_data.get(value)  
-                if isinstance:
-                    return current_data,dict
+                if isinstance(current_data,dict):
+                    pass
+                elif isinstance(current_data,list):
+                    pass
                 else:
-                    return None
+                    return "null"
+                
+                
         return current_data                       
 
 if __name__=="__main__":
@@ -76,18 +84,23 @@ if __name__=="__main__":
         "location": {
         "city": "New York",
         "postcode": "10001"
-    }TypeError: JSONSearchable.search() missing 1 required positional argument: 'path'
-    """
+        }
+    }
+    """   
+
     searchable_json = JSONSearchable.parse(json_data)
 
-    Queries=[
+    for Queries in [
         "store",
         "inventory[0].title",
         "inventory[?in_stock==true]",
         "inventory[?price<15.0].title",
         "location.country"
-    ]
-    print(Queries)
-
-    print(searchable_json.search(Queries))
-
+    ]:
+     my_variable=searchable_json
+     if my_variable is not None:
+            result = my_variable.search(Queries)
+            print(Queries)
+            print(result)
+    
+    
