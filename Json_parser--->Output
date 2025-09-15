@@ -1,0 +1,11 @@
+parse not fail
+store -- Main Street Books
+Main Street Books
+inventory[0].title -- ({'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': True}, <class 'dict'>)
+Main Street Books
+inventory[?in_stock==true] -- [{'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': True}, {'type': 'magazine', 'title': 'Tech Today', 'price': 5.99, 'in_stock': True}]
+Main Street Books
+inventory[?price<15.0].title -- ['The Great Gatsby', 'Tech Today']
+Main Street Books
+location.country -- None
+Main Street Books
