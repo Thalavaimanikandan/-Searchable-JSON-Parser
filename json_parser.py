@@ -31,7 +31,7 @@ class JSONSearchable:
                         obj, op, val=re.split(r'(==|!=|>=|<=|>|<)',r[2:-1]) 
                         obj,value=obj.strip(),value.strip().strip('"') 
                         if val.replace('.','',1).isdigit():
-                            val=float(value)
+                            val=float(val)
                         elif val=="true":
                             val=True
                         elif val=="false":
@@ -45,8 +45,9 @@ class JSONSearchable:
                                 try:
                                     if eval(f"item[obj] {op} val"):
                                             res.append(item)
-                                except Exception:
-                                   pass
+                                except Exception as e:
+                                    print("eval error:",e)
+                                   
                         current_data=res                                                                
                                             
                     else:
@@ -57,11 +58,16 @@ class JSONSearchable:
                         else:
                             return None         
             else:
-                current_data=current_data.get(value)  
+                
                 if isinstance(current_data,dict):
-                    pass
+                    current_data=current_data.get(value)  
                 elif isinstance(current_data,list):
-                    pass
+                    temp=[]
+                    for item in current_data:
+                        if isinstance(item,dict) and value in item:
+                            temp.append(item[value])
+                    current_data=temp
+                            
                 else:
                     return None
                 if current_data is None:
