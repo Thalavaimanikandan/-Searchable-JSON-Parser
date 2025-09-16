@@ -1,0 +1,13 @@
+{
+"store": "Main Street Books",
+"inventory": [
+{ "type": "book", "title": "The Great Gatsby", "price": 12.50, "in_stock": false },
+{ "type": "book", "title": "Moby Dick", "price": 15.00, "in_stock": false },
+{ "type": "magazine", "title": "Tech Today", "price": 5.99, "in_stock": true }
+],
+"location": {
+"city": "New York",
+"postcode": "10001"
+}
+}
+

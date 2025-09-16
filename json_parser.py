@@ -77,21 +77,12 @@ class JSONSearchable:
         return current_data                      
 
 if __name__=="__main__":
-    json_data = """
-    {
-        "store": "Main Street Books",
-        "inventory": [
-        { "type": "book", "title": "The Great Gatsby", "price": 12.50, "in_stock": true },
-        { "type": "book", "title": "Moby Dick", "price": 15.00, "in_stock": false },
-        { "type": "magazine", "title": "Tech Today", "price": 5.99, "in_stock": true }
-        ],
-        "location": {
-        "city": "New York",
-        "postcode": "10001"
-        }
-    }
-    """   
-    searchable_json = JSONSearchable.parse(json_data)
+    
+    file_path= "json_string.json"
+    with open("/home/thalavai-manikandan/Desktop/json/json_string.json", 'r') as f:
+     json_string = f.read()
+    
+    searchable_json = JSONSearchable.parse(json_string)
     if searchable_json is None:
         print("parse fail")
     else:
@@ -102,13 +93,19 @@ if __name__=="__main__":
         "inventory[0].title",
         "inventory[?in_stock==true]",
         "inventory[?price<15.0].title",
-        "location.country"
+        "location.country",
+        "magazine"
     ]:
         my_variable=searchable_json
         if my_variable is not None:
             result=my_variable.search(Queries)
-            print(Queries,"--",result)
-        print(searchable_json.search("store"))    
+            print(Queries,"----||---->",result)
+    print(searchable_json.search("store"))
+    print(searchable_json.search("location.country")) 
+    print(searchable_json.search("country.Asia"))
+    
+      
+           
     
             
     
