@@ -1,6 +1,16 @@
 parse not fail
-store -- Main Street Books
-inventory[0].title -- ({'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': True}, <class 'dict'>)
-inventory[?in_stock==true] -- [{'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': True}, {'type': 'magazine', 'title': 'Tech Today', 'price': 5.99, 'in_stock': True}]
-inventory[?price<15.0].title -- ['The Great Gatsby', 'Tech Today']
-location.country -- None
+Enter your Queries:
+Enter Query:<---inventory[?in_stock==true]      
+inventory[?in_stock==true] ----||----> [{'type': 'magazine', 'title': 'Tech Today', 'price': 5.99, 'in_stock': True}]
+Enter Query:<---inventory[?in_stock==false]
+inventory[?in_stock==false] ----||----> [{'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': False}, {'type': 'book', 'title': 'Moby Dick', 'price': 15.0, 'in_stock': False}]
+Enter Query:<---inventory[?price<15.0].title
+inventory[?price<15.0].title ----||----> ['The Great Gatsby', 'Tech Today']
+Enter Query:<---location.country
+location.country ----||----> None
+Enter Query:<---store
+store ----||----> Main Street Books
+Enter Query:<---inventory[0].title
+inventory[0].title ----||----> ({'type': 'book', 'title': 'The Great Gatsby', 'price': 12.5, 'in_stock': False}, <class 'dict'>)
+Enter Query:<---exit
+Existing....
