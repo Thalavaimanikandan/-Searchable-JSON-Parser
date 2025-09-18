@@ -29,7 +29,7 @@ class JSONSearchable:
                         continue
                     if r.startswith("[?"):
                         obj, op, val=re.split(r'(==|!=|>=|<=|>|<)',r[2:-1]) 
-                        obj,value=obj.strip(),value.strip().strip('"') 
+                        obj,value=obj.strip(),value.strip().strip('"').lower()
                         if val.replace('.','',1).isdigit():
                             val=float(val)
                         elif val=="true":
@@ -88,22 +88,21 @@ if __name__=="__main__":
     else:
         print("parse not fail")    
 
-    for Queries in [
-        "store",
-        "inventory[0].title",
-        "inventory[?in_stock==true]",
-        "inventory[?price<15.0].title",
-        "location.country",
-        "magazine"
-    ]:
+    print("Enter your Queries:")
+    while True:
+        Query=input("Enter Query:<---").strip()
+        if Query.lower() == 'exit':
+            print("Existing....")
+            break
+
+
         my_variable=searchable_json
         if my_variable is not None:
-            result=my_variable.search(Queries)
-            print(Queries,"----||---->",result)
-    print(searchable_json.search("store"))
-    print(searchable_json.search("location.country")) 
-    print(searchable_json.search("country.Asia"))
+            result=my_variable.search(Query)
+            print(Query,"----||---->",result)
     
+
+
       
            
     
